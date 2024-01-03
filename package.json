@@ -1,0 +1,22 @@
+{
+  "name": "httpserver",
+  "version": "1.0.0",
+  "description": "nodejs http server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/surjitiit/httpserver.git"
+  },
+  "author": "surjit",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/surjitiit/httpserver/issues"
+  },
+  "homepage": "https://github.com/surjitiit/httpserver#readme",
+  "dependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
