@@ -1,33 +1,25 @@
-
-console.log("Start script")
-
 const fs = require('fs');
 const http = require('http');
 
-
 const port = process.env.PORT || 3000;
-
 
 const server = http.createServer((req, resp) => {
 
-    if(req.url == '/') {
-        resp.statusCode = 200;
-        resp.setHeader = ('Content-Type', 'text/html');
-        resp.end("<h1>This is http server default page</h1>");
-    } else if(req.url == '/about'){
-        resp.statusCode = 200;
-        resp.setHeader = ('Content-Type', 'text/html');
-        resp.end("<h1>this is http server about page</h1>");
-    } else if(req.url == '/contact'){
-        resp.statusCode = 200;
-        resp.setHeader = ('Content-Type', 'text/html');
-        resp.end("<h1>this is http server contact page</h1>");
+    resp.statusCode = 200;
+    resp.setHeader = ('Content-Type', 'text/html');
+
+    
+    if (fs.existsSync('pages'+req.url+'.html')) {
+        const htmlData = fs.readFileSync('pages'+req.url+'.html');
+        resp.end(htmlData.toString());
+    } else if (req.url == '/') {
+        const htmlData = fs.readFileSync('pages/home.html');
+        resp.end(htmlData.toString());
     } else {
-        resp.statusCode = 404;
-        resp.setHeader = ('Content-Type', 'text/html');
-        resp.end("<h1>Page not found</h1>");
+        resp.statusCode = 402;
+        const htmlData = fs.readFileSync('error.html');
+        resp.end(htmlData.toString());
     }
-        
 })
 
 server.listen(port, () => {
