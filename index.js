@@ -8,12 +8,11 @@ const server = http.createServer((req, resp) => {
     resp.statusCode = 200;
     resp.setHeader = ('Content-Type', 'text/html');
 
-    
-    if (fs.existsSync('pages'+req.url+'.html')) {
-        const htmlData = fs.readFileSync('pages'+req.url+'.html');
+    if (fs.existsSync('theme'+req.url)) {
+        const htmlData = fs.readFileSync('theme'+req.url);
         resp.end(htmlData.toString());
     } else if (req.url == '/') {
-        const htmlData = fs.readFileSync('pages/home.html');
+        const htmlData = fs.readFileSync('theme/home.html');
         resp.end(htmlData.toString());
     } else {
         resp.statusCode = 402;
