@@ -5,19 +5,30 @@ const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, resp) => {
 
-    resp.statusCode = 200;
-    resp.setHeader = ('Content-Type', 'text/html');
 
-    if (fs.existsSync('theme'+req.url)) {
-        const htmlData = fs.readFileSync('theme'+req.url);
-        resp.end(htmlData.toString());
-    } else if (req.url == '/') {
-        const htmlData = fs.readFileSync('theme/home.html');
+    const fileData = fs.readFileSync('./routes.json', 'utf-8', function (err, fileContents) {
+        if (err) throw err;
+        
+        return fileContents;
+    });
+
+    var fileFormatedData = JSON.parse(fileData);
+    var pagePath = '';
+    if(req.url in fileFormatedData) {
+        pagePath = fileFormatedData[req.url];
+    } else {
+        pagePath = 'pages/error.html';
+    }
+    
+    if (fs.existsSync(pagePath)) {
+        resp.statusCode = 200;
+        resp.setHeader = ('Content-Type', 'text/html');
+
+        var htmlData = fs.readFileSync(pagePath);
         resp.end(htmlData.toString());
     } else {
         resp.statusCode = 402;
-        const htmlData = fs.readFileSync('error.html');
-        resp.end(htmlData.toString());
+        resp.end('page not exist');
     }
 })
 
